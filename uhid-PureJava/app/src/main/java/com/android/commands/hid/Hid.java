@@ -245,6 +245,7 @@ public class Hid {
 
                 case "k":
                     keyboardCode[2] = random.nextInt() % 2 == 0 ? (byte) random.nextInt() : 0;
+                    System.out.println("Key: " + keyboardCode[2]);
                     keyboard.sendReport(keyboardCode);//Here we send keyboard report data.
                     break;
 
