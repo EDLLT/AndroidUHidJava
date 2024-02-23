@@ -61,14 +61,14 @@ public class Device {
     private final Object mCond = new Object();
 
     static {
-        System.loadLibrary("hidcommand_jni");
+        System.loadLibrary("custom_hidcommand_jni");
     }
 
-    private static native long nativeOpenDevice(String name, int id, int vid, int pid,
-                                                byte[] descriptor, MessageQueue queue, DeviceCallback callback);
+//    private static native long nativeOpenDevice(String name, int id, int vid, int pid,
+//                                                byte[] descriptor, MessageQueue queue, DeviceCallback callback);
 
-    private static native long nativeOpenDevice(String name, int id, int vid, int pid,
-                                                byte[] descriptor, DeviceCallback callback);
+//    private static native long nativeOpenDevice(String name, int id, int vid, int pid,
+//                                                byte[] descriptor, DeviceCallback callback);
 
     private static native long nativeOpenDevice(String name, int id, int vid, int pid, int bus,
                                                 byte[] descriptor, DeviceCallback callback);
@@ -127,7 +127,7 @@ public class Device {
 
     private class DeviceHandler extends Handler {
         private long mPtr;
-        private boolean mBarrierToken;
+        private boolean mBarrierToken = true;
 
         public DeviceHandler(Looper looper) {
             super(looper);
@@ -143,15 +143,16 @@ public class Device {
                         mPtr = nativeOpenDevice(args.getString("name"), args.getInt("id"), args.getInt("vid"), args.getInt("pid"),
                                 args.getInt("bus"), args.getByteArray("descriptor"), new DeviceCallback());
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                        mPtr = nativeOpenDevice(args.getString("name"), args.getInt("id"), args.getInt("vid"), args.getInt("pid"),
-                                args.getByteArray("descriptor"), new DeviceCallback());
+//                        mPtr = nativeOpenDevice(args.getString("name"), args.getInt("id"), args.getInt("vid"), args.getInt("pid"),
+//                                args.getByteArray("descriptor"), new DeviceCallback());
                     } else {
-                        mPtr = nativeOpenDevice(args.getString("name"), args.getInt("id"), args.getInt("vid"), args.getInt("pid"),
-                                args.getByteArray("descriptor"), getLooper().myQueue(), new DeviceCallback());
+//                        mPtr = nativeOpenDevice(args.getString("name"), args.getInt("id"), args.getInt("vid"), args.getInt("pid"),
+//                                args.getByteArray("descriptor"), getLooper().myQueue(), new DeviceCallback());
                     }
                     pauseEvents();
                     break;
                 case MSG_SEND_REPORT:
+                    Log.w(TAG, "mPtr: " + mPtr + " mBarrierToken: " + mBarrierToken);
                     if (mPtr != 0 && mBarrierToken) {
                         nativeSendReport(mPtr, (byte[]) msg.obj);
                     } else {
@@ -183,7 +184,8 @@ public class Device {
         }
 
         public void pauseEvents() {
-            mBarrierToken = false;
+
+            //mBarrierToken = false;
         }
 
         public void resumeEvents() {

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "uhid.purejava"
-        minSdk 23
+        minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -20,6 +20,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path file('src/main/jni/CMakeLists.txt')
+            version '3.22.1'
         }
     }
     compileOptions {

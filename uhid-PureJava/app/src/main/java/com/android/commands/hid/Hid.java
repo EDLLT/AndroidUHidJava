@@ -174,7 +174,7 @@ public class Hid {
     // mouseCode[1] represents the X axis value of the mouse. Assigned normally.
     // mouseCode[2] represents the Y axis value of the mouse. Assigned normally.
     // mouseCode[3] represents the SCROLL axis value of the mouse. Assigned by using the formula: mouseCode[3] = (byte) (~scrollValue + 1);
-    public static byte[] mouseCode = {0x00, 0x00, 0x00, 0x00};
+//    public static byte[] mouseCode = {0x00, 0x00, 0x00, 0x00};
 
 
     // The gamePadCode array is 6 bytes long and represents the report data for a hid gamePad.
@@ -183,14 +183,14 @@ public class Hid {
     // gamePadCode[3] represents the Y axis value of the gamePad. Assigned normally.
     // gamePadCode[4] represents the Z axis value of the gamePad. Assigned normally.
     // gamePadCode[5] represents the RZ axis value of the gamePad. Assigned normally.
-    public static byte[] gamePadCode = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+//    public static byte[] gamePadCode = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 
     // The touchScreenCode array is 5 bytes long and represents the report data for a single-touch hid touchScreen.
     // touchScreenCode[0]'s first bit represents whether a finger is touching the screen.
     // touchScreenCode[1] and touchScreenCode[2] represents the X value of the finger. Assigned by using the formula: touchScreenCode[1] = (byte) (x % 256); touchScreenCode[2] = (byte) (x / 256);
     // touchScreenCode[3] and touchScreenCode[4] represents the Y value of the finger. Assigned by using the formula: touchScreenCode[3] = (byte) (y % 256); touchScreenCode[4] = (byte) (y / 256);
-    public static byte[] touchScreenCode = {0x00, 0x00, 0x00, 0x00, 0x00};
+//    public static byte[] touchScreenCode = {0x00, 0x00, 0x00, 0x00, 0x00};
 
     public static void main(String[] args) {
 
@@ -206,10 +206,10 @@ public class Hid {
         // We create four uHid devices.
         // The id, name, vid, pid, and bus parameters do not matter. Only the descriptor parameter matters.
 
-        Device mouse = new Device(1, "uHidMouse", 1234, 5678, 0x03, hidMouseDescriptor, mouseCode, null, null);
+//        Device mouse = new Device(1, "uHidMouse", 1234, 5678, 0x03, hidMouseDescriptor, mouseCode, null, null);
         Device keyboard = new Device(2, "uHidKeyboard", 8765, 4321, 0x03, hidKeyboardDescriptor, keyboardCode, null, null);
-        Device gamePad = new Device(3, "uHidGamePad", 2345, 6789, 0x03, hidGamePadDescriptor, gamePadCode, null, null);
-        Device touchScreen = new Device(4, "uHidTouchScreen", 6789, 2345, 0x03, hidTouchScreenDescriptor, touchScreenCode, null, null);
+//        Device gamePad = new Device(3, "uHidGamePad", 2345, 6789, 0x03, hidGamePadDescriptor, gamePadCode, null, null);
+//        Device touchScreen = new Device(4, "uHidTouchScreen", 6789, 2345, 0x03, hidTouchScreenDescriptor, touchScreenCode, null, null);
 
 
         System.out.println("");
@@ -238,9 +238,9 @@ public class Hid {
                     break label;
 
                 case "m":
-                    mouseCode[1] = (byte) random.nextInt();
-                    mouseCode[2] = (byte) random.nextInt();
-                    mouse.sendReport(mouseCode);//Here we send mouse report data.
+//                    mouseCode[1] = (byte) random.nextInt();
+//                    mouseCode[2] = (byte) random.nextInt();
+//                    mouse.sendReport(mouseCode);//Here we send mouse report data.
                     break;
 
                 case "k":
@@ -251,57 +251,57 @@ public class Hid {
 
                 case "g":
                     boolean reset = random.nextInt() % 2 == 0;
-                    gamePadCode[2] = reset ? (byte) random.nextInt() : 0;
-                    gamePadCode[3] = reset ? (byte) random.nextInt() : 0;
-                    gamePadCode[4] = reset ? (byte) random.nextInt() : 0;
-                    gamePadCode[5] = reset ? (byte) random.nextInt() : 0;
-                    gamePad.sendReport(gamePadCode);//Here we send gamePad report data.
+//                    gamePadCode[2] = reset ? (byte) random.nextInt() : 0;
+//                    gamePadCode[3] = reset ? (byte) random.nextInt() : 0;
+//                    gamePadCode[4] = reset ? (byte) random.nextInt() : 0;
+//                    gamePadCode[5] = reset ? (byte) random.nextInt() : 0;
+//                    gamePad.sendReport(gamePadCode);//Here we send gamePad report data.
                     break;
 
                 case "t":
 
                     int x1 = 4096 / 2 + random.nextInt() % 1024;
                     int y1 = 4096 / 2 + random.nextInt() % 1024;
-                    touchScreenCode[0] = 0x01;
+//                    touchScreenCode[0] = 0x01;
                     //Square gesture
                     for (int i = 0; i < 200; i++) {
                         x1 += 2;
-                        touchScreenCode[1] = (byte) (x1 % 256);
-                        touchScreenCode[2] = (byte) (x1 / 256);
-                        touchScreenCode[3] = (byte) (y1 % 256);
-                        touchScreenCode[4] = (byte) (y1 / 256);
-                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
+//                        touchScreenCode[1] = (byte) (x1 % 256);
+//                        touchScreenCode[2] = (byte) (x1 / 256);
+//                        touchScreenCode[3] = (byte) (y1 % 256);
+//                        touchScreenCode[4] = (byte) (y1 / 256);
+//                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
                         SystemClock.sleep(3);
                     }
                     for (int i = 0; i < 200; i++) {
                         y1 += 2;
-                        touchScreenCode[1] = (byte) (x1 % 256);
-                        touchScreenCode[2] = (byte) (x1 / 256);
-                        touchScreenCode[3] = (byte) (y1 % 256);
-                        touchScreenCode[4] = (byte) (y1 / 256);
-                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
+//                        touchScreenCode[1] = (byte) (x1 % 256);
+//                        touchScreenCode[2] = (byte) (x1 / 256);
+//                        touchScreenCode[3] = (byte) (y1 % 256);
+//                        touchScreenCode[4] = (byte) (y1 / 256);
+//                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
                         SystemClock.sleep(3);
                     }
                     for (int i = 0; i < 200; i++) {
                         x1 -= 2;
-                        touchScreenCode[1] = (byte) (x1 % 256);
-                        touchScreenCode[2] = (byte) (x1 / 256);
-                        touchScreenCode[3] = (byte) (y1 % 256);
-                        touchScreenCode[4] = (byte) (y1 / 256);
-                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
+//                        touchScreenCode[1] = (byte) (x1 % 256);
+//                        touchScreenCode[2] = (byte) (x1 / 256);
+//                        touchScreenCode[3] = (byte) (y1 % 256);
+//                        touchScreenCode[4] = (byte) (y1 / 256);
+//                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
                         SystemClock.sleep(3);
                     }
                     for (int i = 0; i < 200; i++) {
                         y1 -= 2;
-                        touchScreenCode[1] = (byte) (x1 % 256);
-                        touchScreenCode[2] = (byte) (x1 / 256);
-                        touchScreenCode[3] = (byte) (y1 % 256);
-                        touchScreenCode[4] = (byte) (y1 / 256);
-                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
+//                        touchScreenCode[1] = (byte) (x1 % 256);
+//                        touchScreenCode[2] = (byte) (x1 / 256);
+//                        touchScreenCode[3] = (byte) (y1 % 256);
+//                        touchScreenCode[4] = (byte) (y1 / 256);
+//                        touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
                         SystemClock.sleep(3);
                     }
-                    touchScreenCode[0] = 0x00;
-                    touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
+//                    touchScreenCode[0] = 0x00;
+//                    touchScreen.sendReport(touchScreenCode);//Here we send touchScreen report data.
                     break;
             }
         }
@@ -309,10 +309,10 @@ public class Hid {
         System.out.println("Bye!");
 
         // Close the uhid devices.
-        mouse.close();
+//        mouse.close();
         keyboard.close();
-        gamePad.close();
-        touchScreen.close();
+//        gamePad.close();
+//        touchScreen.close();
     }
 
 
